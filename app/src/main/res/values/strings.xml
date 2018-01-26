@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Popular Movies</string>
+    <string name="movie_thumbnail">Movie Thumbnail</string>
+    <string name="sample">Sample</string>
+    <string name="fetching_movies">Fetching Movies</string>
+    <string name="no_network">Network Not Available</string>
+    <string name="popular">Get Popular</string>
+    <string name="top_rated">Get Top Rated</string>
 </resources>
