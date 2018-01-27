@@ -19,6 +19,9 @@ import com.asura.popularmovies.utils.NetworkUtils;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 import static com.asura.popularmovies.MovieListQueryTask.POPULAR;
 import static com.asura.popularmovies.MovieListQueryTask.TOP_RATED;
 
@@ -27,8 +30,11 @@ public class MainActivity extends AppCompatActivity implements MovieListQueryTas
 
     final static String TAG = "MainActivity";
 
-    private RecyclerView mImageList = null;
-    private TextView mErrorTextView = null;
+    @BindView(R.id.imageList)
+    public RecyclerView mImageList;
+
+    @BindView(R.id.error_view)
+    public TextView mErrorTextView;
 
     private MovieListQueryTask mMovieListQueryTask = null;
 
@@ -41,8 +47,8 @@ public class MainActivity extends AppCompatActivity implements MovieListQueryTas
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mErrorTextView = findViewById(R.id.error_view);
-        mImageList = findViewById(R.id.imageList);
+        ButterKnife.bind(this);
+
         GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 2);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         mImageList.setLayoutManager(layoutManager);

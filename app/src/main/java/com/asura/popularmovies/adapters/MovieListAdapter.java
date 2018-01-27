@@ -19,6 +19,9 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MovieCardHolder> {
 
     final static String TAG = "MovieListAdapter";
@@ -64,19 +67,25 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
     }
 
     public class MovieCardHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+        @BindView(R.id.movie_Thumbnail)
         public ImageView moviePoster;
+
+        @BindView(R.id.movie_language)
         public TextView movieLanguage;
+
+        @BindView(R.id.vote_average)
         public TextView movieVoteAverage;
+
+        @BindView(R.id.popularity)
         public TextView popularity;
 
         public int position;
 
         public MovieCardHolder(View itemView) {
             super(itemView);
-            moviePoster = itemView.findViewById(R.id.movie_Thumbnail);
-            movieLanguage = itemView.findViewById(R.id.movie_language);
-            movieVoteAverage = itemView.findViewById(R.id.vote_average);
-            popularity = itemView.findViewById(R.id.popularity);
+
+            ButterKnife.bind(this,itemView);
 
             moviePoster.setOnClickListener(this);
         }
