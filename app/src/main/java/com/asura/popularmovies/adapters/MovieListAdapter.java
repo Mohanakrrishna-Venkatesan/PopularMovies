@@ -1,6 +1,7 @@
 package com.asura.popularmovies.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.asura.popularmovies.MovieDetailActivity;
 import com.asura.popularmovies.R;
 import com.asura.popularmovies.data.Movie;
 import com.squareup.picasso.Picasso;
@@ -23,6 +25,8 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
 
     private Context mContext;
     private List<Movie> mMovieList = new ArrayList<>();
+
+    private final static String EXTRA_MOVIE = "EXTRA_MOVIE";
 
     public MovieListAdapter(@NonNull Context context) {
         mContext = context;
@@ -42,8 +46,10 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
         Picasso.with(mContext).load(movie.getPoster_path())
                 .into(holder.moviePoster);
         holder.movieLanguage.setText(movie.getLanguage());
-        holder.movieVoteAverage.setText(movie.getVoteAverage() + "");
+        holder.movieVoteAverage.setText(movie.getVoteAverage() + "/10");
         holder.popularity.setText(movie.getPopularity() + "");
+
+        holder.position = position;
     }
 
     @Override
@@ -57,11 +63,13 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
         notifyDataSetChanged();
     }
 
-    public class MovieCardHolder extends RecyclerView.ViewHolder {
+    public class MovieCardHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public ImageView moviePoster;
         public TextView movieLanguage;
         public TextView movieVoteAverage;
         public TextView popularity;
+
+        public int position;
 
         public MovieCardHolder(View itemView) {
             super(itemView);
@@ -69,6 +77,15 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
             movieLanguage = itemView.findViewById(R.id.movie_language);
             movieVoteAverage = itemView.findViewById(R.id.vote_average);
             popularity = itemView.findViewById(R.id.popularity);
+
+            moviePoster.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(mContext, MovieDetailActivity.class);
+            intent.putExtra(EXTRA_MOVIE, mMovieList.get(position));
+            mContext.startActivity(intent);
         }
     }
 }

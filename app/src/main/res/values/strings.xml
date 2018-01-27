@@ -6,4 +6,8 @@
     <string name="no_network">Network Not Available</string>
     <string name="popular">Get Popular</string>
     <string name="top_rated">Get Top Rated</string>
+    <string name="title_activity_movie_detail">MovieDetailActivity</string>
+    <string name="overview">Plot Synopsis</string>
+    <string name="release_date">Release Date:</string>
+    <string name="rating">Rating:</string>
 </resources>

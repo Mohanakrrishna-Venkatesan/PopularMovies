@@ -17,7 +17,6 @@ public class NetworkUtils {
 
     final static String TAG = "NetworkUtils";
 
-    //TODO - need to decide how to get the image Base URl here
     public final static String BASE_URL = "http://image.tmdb.org/t/p/";
 
     public final static String MOVIE_DB_BASE_URL = "http://api.themoviedb.org/3/discover/movie";

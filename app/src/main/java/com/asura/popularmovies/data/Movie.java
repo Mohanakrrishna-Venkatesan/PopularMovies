@@ -2,7 +2,9 @@ package com.asura.popularmovies.data;
 
 import com.asura.popularmovies.utils.NetworkUtils;
 
-public class Movie {
+import java.io.Serializable;
+
+public class Movie implements Serializable {
     private String title;
     private String poster_path;
     private String original_language;
