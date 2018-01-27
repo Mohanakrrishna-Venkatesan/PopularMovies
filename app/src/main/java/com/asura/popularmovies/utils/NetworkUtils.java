@@ -29,7 +29,8 @@ public class NetworkUtils {
     public final static String W780 = "w780";
     public final static String ORIGINAL = "original";
 
-    private final static String MOVIE_DB_API_KEY = "2311efeb2d1f5182aaf24069f0e27e3b";
+    //TODO - Users need to add their Movie DB API key in the following variable
+    private final static String MOVIE_DB_API_KEY = "";
     private final static String PARAM_API_KEY = "api_key";
     private final static String PARAM_SORT_BY = "sort_by";
 
