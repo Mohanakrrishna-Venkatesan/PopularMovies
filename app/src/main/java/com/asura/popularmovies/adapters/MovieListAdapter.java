@@ -21,6 +21,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.MovieCardHolder> {
 
@@ -66,7 +67,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
         notifyDataSetChanged();
     }
 
-    public class MovieCardHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class MovieCardHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.movie_Thumbnail)
         public ImageView moviePoster;
@@ -85,13 +86,11 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
         public MovieCardHolder(View itemView) {
             super(itemView);
 
-            ButterKnife.bind(this,itemView);
-
-            moviePoster.setOnClickListener(this);
+            ButterKnife.bind(this, itemView);
         }
 
-        @Override
-        public void onClick(View view) {
+        @OnClick(R.id.movie_Thumbnail)
+        public void onClick() {
             Intent intent = new Intent(mContext, MovieDetailActivity.class);
             intent.putExtra(EXTRA_MOVIE, mMovieList.get(position));
             mContext.startActivity(intent);
