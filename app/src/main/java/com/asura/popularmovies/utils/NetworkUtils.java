@@ -19,7 +19,7 @@ public class NetworkUtils {
 
     public final static String BASE_URL = "http://image.tmdb.org/t/p/";
 
-    public final static String MOVIE_DB_BASE_URL = "http://api.themoviedb.org/3/discover/movie";
+    public final static String MOVIE_DB_BASE_URL = "http://api.themoviedb.org/3/movie";
 
     public final static String W92 = "w92";
     public final static String W154 = "w154";
@@ -32,10 +32,9 @@ public class NetworkUtils {
     //TODO - Users need to add their Movie DB API key in the following variable
     private final static String MOVIE_DB_API_KEY = "";
     private final static String PARAM_API_KEY = "api_key";
-    private final static String PARAM_SORT_BY = "sort_by";
 
-    private final static String POPULARITY_DESC = "popularity.desc";
-    private final static String TOP_RATED = "vote_average.desc";
+    private final static String POPULAR = "/popular";
+    private final static String TOP_RATED = "/top_rated";
 
     /**
      * @param imagePath - the relative path of the image
@@ -57,8 +56,7 @@ public class NetworkUtils {
 
 
     public static String getPopularMoviesList() {
-        Uri uri = Uri.parse(MOVIE_DB_BASE_URL).buildUpon()
-                .appendQueryParameter(PARAM_SORT_BY, POPULARITY_DESC)
+        Uri uri = Uri.parse(MOVIE_DB_BASE_URL+POPULAR).buildUpon()
                 .appendQueryParameter(PARAM_API_KEY, MOVIE_DB_API_KEY).build();
         URL url = null;
         try {
@@ -70,8 +68,7 @@ public class NetworkUtils {
     }
 
     public static String getTopRatedMoviesList() {
-        Uri uri = Uri.parse(MOVIE_DB_BASE_URL).buildUpon()
-                .appendQueryParameter(PARAM_SORT_BY, TOP_RATED)
+        Uri uri = Uri.parse(MOVIE_DB_BASE_URL+TOP_RATED).buildUpon()
                 .appendQueryParameter(PARAM_API_KEY, MOVIE_DB_API_KEY).build();
         URL url = null;
         try {
