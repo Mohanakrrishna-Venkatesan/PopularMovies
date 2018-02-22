@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.asura.popularmovies.data.Movie;
+import com.github.ivbaranov.mfb.MaterialFavoriteButton;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -31,6 +32,9 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     @BindView(R.id.movie_overview)
     public TextView mOverview;
+
+    @BindView(R.id.favorite)
+    public MaterialFavoriteButton favoriteButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,6 +60,13 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         mOverview.setText(movie.getOverview());
         mOverview.setMovementMethod(new ScrollingMovementMethod());
+
+        favoriteButton.setOnFavoriteChangeListener(new MaterialFavoriteButton.OnFavoriteChangeListener() {
+            @Override
+            public void onFavoriteChanged(MaterialFavoriteButton buttonView, boolean favorite) {
+
+            }
+        });
     }
 
 }
