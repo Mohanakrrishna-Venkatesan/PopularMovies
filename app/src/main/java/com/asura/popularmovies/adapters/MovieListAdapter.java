@@ -2,6 +2,7 @@ package com.asura.popularmovies.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.asura.popularmovies.MovieDetailActivity;
 import com.asura.popularmovies.R;
+import com.asura.popularmovies.data.FavoriteMovie;
 import com.asura.popularmovies.data.Movie;
 import com.squareup.picasso.Picasso;
 
@@ -46,9 +48,14 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.Movi
     @Override
     public void onBindViewHolder(MovieCardHolder holder, int position) {
         Movie movie = mMovieList.get(position);
-        Log.i(TAG, movie.getPoster_path());
-        Picasso.with(mContext).load(movie.getPoster_path())
-                .into(holder.moviePoster);
+        if(movie instanceof FavoriteMovie){
+            Bitmap bitmap = ((FavoriteMovie)movie).getImagePath();
+            holder.moviePoster.setImageBitmap(bitmap);
+        }
+        else {
+            Picasso.with(mContext).load(movie.getPoster_path())
+                    .into(holder.moviePoster);
+        }
         holder.movieLanguage.setText(movie.getLanguage());
         holder.movieVoteAverage.setText(movie.getVoteAverage() + "/10");
         holder.popularity.setText(movie.getPopularity() + "");

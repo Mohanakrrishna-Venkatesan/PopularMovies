@@ -6,11 +6,19 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.util.Log;
 
+import com.asura.popularmovies.data.MovieTrailers;
+import com.asura.popularmovies.data.Trailer;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 public class NetworkUtils {
@@ -18,6 +26,10 @@ public class NetworkUtils {
     final static String TAG = "NetworkUtils";
 
     public final static String BASE_URL = "http://image.tmdb.org/t/p/";
+
+    private static final String YOUTUBE_URL = "https://www.youtube.com/";
+    private static final String YOUTUBE_WATCH = "watch";
+    private static final String YOUTUBE_PARAM = "v";
 
     public final static String MOVIE_DB_BASE_URL = "http://api.themoviedb.org/3/movie";
 
@@ -30,11 +42,13 @@ public class NetworkUtils {
     public final static String ORIGINAL = "original";
 
     //TODO - Users need to add their Movie DB API key in the following variable
-    private final static String MOVIE_DB_API_KEY = "";
+    private final static String MOVIE_DB_API_KEY = "2311efeb2d1f5182aaf24069f0e27e3b";
     private final static String PARAM_API_KEY = "api_key";
 
-    private final static String POPULAR = "/popular";
-    private final static String TOP_RATED = "/top_rated";
+    private final static String POPULAR = "popular";
+    private final static String TOP_RATED = "top_rated";
+    private final static String TRAILERS = "videos";
+    private final static String REVIEWS = "reviews";
 
     /**
      * @param imagePath - the relative path of the image
@@ -56,8 +70,11 @@ public class NetworkUtils {
 
 
     public static String getPopularMoviesList() {
-        Uri uri = Uri.parse(MOVIE_DB_BASE_URL+POPULAR).buildUpon()
-                .appendQueryParameter(PARAM_API_KEY, MOVIE_DB_API_KEY).build();
+        Uri uri = Uri.parse(MOVIE_DB_BASE_URL)
+                .buildUpon()
+                .appendPath(POPULAR)
+                .appendQueryParameter(PARAM_API_KEY, MOVIE_DB_API_KEY)
+                .build();
         URL url = null;
         try {
             url = new URL(uri.toString());
@@ -68,8 +85,11 @@ public class NetworkUtils {
     }
 
     public static String getTopRatedMoviesList() {
-        Uri uri = Uri.parse(MOVIE_DB_BASE_URL+TOP_RATED).buildUpon()
-                .appendQueryParameter(PARAM_API_KEY, MOVIE_DB_API_KEY).build();
+        Uri uri = Uri.parse(MOVIE_DB_BASE_URL)
+                .buildUpon()
+                .appendPath(TOP_RATED)
+                .appendQueryParameter(PARAM_API_KEY, MOVIE_DB_API_KEY)
+                .build();
         URL url = null;
         try {
             url = new URL(uri.toString());
@@ -77,6 +97,40 @@ public class NetworkUtils {
             e.printStackTrace();
         }
         return getResponseFromHttpUrl(url);
+    }
+
+    public static List<String> getMovieTrailers(String movieId){
+        List<String> trailersList = new ArrayList<>();
+        Uri uri = Uri.parse(MOVIE_DB_BASE_URL)
+                .buildUpon()
+                .appendPath(movieId)
+                .appendPath(TRAILERS)
+                .appendQueryParameter(PARAM_API_KEY, MOVIE_DB_API_KEY)
+                .build();
+        URL url = null;
+        try {
+            url = new URL(uri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        Gson gson = new GsonBuilder().create();
+        Trailer[] trailers = gson.fromJson(getResponseFromHttpUrl(url), MovieTrailers.class).getResults();
+        Log.i(TAG,getResponseFromHttpUrl(url));
+        for (Trailer trailer : trailers){
+            Uri trailerUri = Uri.parse(YOUTUBE_URL)
+                    .buildUpon()
+                    .appendPath(YOUTUBE_WATCH)
+                    .appendQueryParameter(YOUTUBE_PARAM, trailer.getKey())
+                    .build();
+            try {
+                URL trailerUrl = new URL(trailerUri.toString());
+                Log.i(TAG,trailerUrl.toString());
+                trailersList.add(trailerUrl.toString());
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+        }
+        return trailersList;
     }
 
     public static String getResponseFromHttpUrl(URL url) {

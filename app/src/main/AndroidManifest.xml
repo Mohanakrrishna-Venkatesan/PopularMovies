@@ -23,11 +23,18 @@
             android:name=".MovieDetailActivity"
             android:label="@string/title_activity_movie_detail"
             android:parentActivityName=".MainActivity"
+            android:launchMode="singleInstance"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.asura.popularmovies.MainActivity" />
         </activity>
+        
+        <provider
+            android:authorities="com.asura.popularmovies.providers.FavoriteMoviesProvider"
+            android:name=".providers.FavoriteMoviesProvider"
+            android:exported="false"/>
+
     </application>
 
 </manifest>

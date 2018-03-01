@@ -22,7 +22,6 @@
                 android:layout_height="wrap_content"
                 android:background="@color/colorAccent"
                 android:padding="32dp"
-                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -35,19 +34,6 @@
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
                     android:textColor="@color/textColor"
                     android:textStyle="bold" />
-
-                <com.github.ivbaranov.mfb.MaterialFavoriteButton
-                    android:id="@+id/favorite"
-                    android:layout_marginLeft="@dimen/cardview_default_radius"
-                    android:layout_marginTop="-8dp"
-                    app:mfb_animate_favorite="true"
-                    app:mfb_animate_unfavorite="false"
-                    app:mfb_padding="12"
-                    app:mfb_favorite_image="@drawable/ic_favorite_white_24dp"
-                    app:mfb_not_favorite_image="@drawable/ic_favorite_border_white_24dp"
-                    app:mfb_size="48"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
 
             </LinearLayout>
 
@@ -146,6 +132,23 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/movie_Thumbnail"
                 app:layout_constraintTop_toBottomOf="@+id/movie_release_data" />
+
+            <com.github.ivbaranov.mfb.MaterialFavoriteButton
+                android:id="@+id/favorite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintStart_toEndOf="@+id/movie_Thumbnail"
+                app:layout_constraintTop_toBottomOf="@+id/movie_rating"
+                app:mfb_animate_favorite="true"
+                app:mfb_animate_unfavorite="false"
+                app:mfb_favorite_image="@drawable/ic_favorite_black_24dp"
+                app:mfb_not_favorite_image="@drawable/ic_favorite_border_black_24dp"
+                app:mfb_padding="12"
+                app:mfb_size="48" />
+
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 

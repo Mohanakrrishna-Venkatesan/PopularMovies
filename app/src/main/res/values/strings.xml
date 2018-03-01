@@ -10,4 +10,6 @@
     <string name="overview">Plot Synopsis</string>
     <string name="release_date">Release Date:</string>
     <string name="rating">Rating:</string>
+    <string name="favorites">Get Favorites</string>
+    <string name="no_favorites">No Favorite Movies</string>
 </resources>
