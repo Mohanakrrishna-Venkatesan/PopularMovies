@@ -6,7 +6,9 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.util.Log;
 
+import com.asura.popularmovies.data.MovieReviews;
 import com.asura.popularmovies.data.MovieTrailers;
+import com.asura.popularmovies.data.Review;
 import com.asura.popularmovies.data.Trailer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -115,7 +117,6 @@ public class NetworkUtils {
         }
         Gson gson = new GsonBuilder().create();
         Trailer[] trailers = gson.fromJson(getResponseFromHttpUrl(url), MovieTrailers.class).getResults();
-        Log.i(TAG,getResponseFromHttpUrl(url));
         for (Trailer trailer : trailers){
             Uri trailerUri = Uri.parse(YOUTUBE_URL)
                     .buildUpon()
@@ -124,7 +125,6 @@ public class NetworkUtils {
                     .build();
             try {
                 URL trailerUrl = new URL(trailerUri.toString());
-                Log.i(TAG,trailerUrl.toString());
                 trailersList.add(trailerUrl.toString());
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -166,4 +166,27 @@ public class NetworkUtils {
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
+    public static List<String> getMovieReviews(String movieId) {
+        List<String> reviewsList = new ArrayList<>();
+        Uri uri = Uri.parse(MOVIE_DB_BASE_URL)
+                .buildUpon()
+                .appendPath(movieId)
+                .appendPath(REVIEWS)
+                .appendQueryParameter(PARAM_API_KEY, MOVIE_DB_API_KEY)
+                .build();
+        URL url = null;
+        try {
+            url = new URL(uri.toString());
+            Log.i(TAG,url.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        Gson gson = new GsonBuilder().create();
+        Review[] reviews = gson.fromJson(getResponseFromHttpUrl(url), MovieReviews.class).getResults();
+        Log.i(TAG,getResponseFromHttpUrl(url));
+        for (Review review : reviews){
+            reviewsList.add(review.getUrl());
+        }
+        return reviewsList;
+    }
 }

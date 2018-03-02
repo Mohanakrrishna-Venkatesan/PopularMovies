@@ -83,10 +83,12 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     private void disableProgressBar() {
-        mProgressBar.dismiss();
-        if (mImageList.getVisibility() == View.GONE) {
-            mImageList.setVisibility(View.VISIBLE);
-            mErrorTextView.setVisibility(View.GONE);
+        if(mProgressBar!=null){
+            mProgressBar.dismiss();
+            if (mImageList.getVisibility() == View.GONE) {
+                mImageList.setVisibility(View.VISIBLE);
+                mErrorTextView.setVisibility(View.GONE);
+            }
         }
     }
 

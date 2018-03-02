@@ -8,19 +8,27 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.asura.popularmovies.adapters.ItemAdapter;
 import com.asura.popularmovies.data.FavoriteMovie;
 import com.asura.popularmovies.data.Movie;
+import com.asura.popularmovies.utils.NetworkUtils;
 import com.github.ivbaranov.mfb.MaterialFavoriteButton;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,6 +61,18 @@ public class MovieDetailActivity extends AppCompatActivity implements MaterialFa
     @BindView(R.id.favorite)
     public MaterialFavoriteButton favoriteButton;
 
+    @BindView(R.id.trailers)
+    public RecyclerView trailers;
+
+    @BindView(R.id.reviews)
+    public RecyclerView reviews;
+
+    @BindView(R.id.trailerLayout)
+    public LinearLayout trailerLayout;
+
+    @BindView(R.id.reviewLayout)
+    public LinearLayout reviewLayout;
+
     private Movie movie;
 
     private Handler mHandler;
@@ -76,6 +96,61 @@ public class MovieDetailActivity extends AppCompatActivity implements MaterialFa
 
         mTitleTextView.setText(movie.getOriginal_title());
 
+        setPosterImage();
+
+        mReleaseDateTextView.setText(movie.getReleaseDate());
+
+        mRating.setText(movie.getVoteAverage() + "/10");
+
+        mOverview.setText(movie.getOverview());
+        mOverview.setMovementMethod(new ScrollingMovementMethod());
+
+        favoriteButton.setOnFavoriteChangeListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        displayTrailersAndReviews();
+    }
+
+    private void displayTrailersAndReviews() {
+        if(NetworkUtils.isNetworkAvailable(this)){
+
+            reviewLayout.setVisibility(View.VISIBLE);
+            trailerLayout.setVisibility(View.VISIBLE);
+
+            mHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    final List<String> trailerList = NetworkUtils.getMovieTrailers(movie.getId());
+                    final List<String> reviewList = NetworkUtils.getMovieReviews(movie.getId());
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            trailers.setLayoutManager(new LinearLayoutManager(MovieDetailActivity.this));
+                            trailers.setItemAnimator(new DefaultItemAnimator());
+                            trailers.setAdapter(new ItemAdapter(MovieDetailActivity.this
+                            ,ItemAdapter.TRAILER,trailerList));
+
+                            reviews.setLayoutManager(new LinearLayoutManager(MovieDetailActivity.this));
+                            reviews.setItemAnimator(new DefaultItemAnimator());
+                            reviews.setAdapter(new ItemAdapter(MovieDetailActivity.this
+                                    ,ItemAdapter.REVIEW,reviewList));
+                        }
+                    });
+                }
+            });
+
+        }else{
+            reviewLayout.setVisibility(View.GONE);
+            trailerLayout.setVisibility(View.GONE);
+        }
+    }
+
+    private void setPosterImage(){
         if(movie instanceof FavoriteMovie){
             mImageView.setImageBitmap(((FavoriteMovie)movie).getImagePath());
             favoriteButton.setFavorite(true);
@@ -96,15 +171,6 @@ public class MovieDetailActivity extends AppCompatActivity implements MaterialFa
                 }
             });
         }
-
-        mReleaseDateTextView.setText(movie.getReleaseDate());
-
-        mRating.setText(movie.getVoteAverage() + "/10");
-
-        mOverview.setText(movie.getOverview());
-        mOverview.setMovementMethod(new ScrollingMovementMethod());
-
-        favoriteButton.setOnFavoriteChangeListener(this);
     }
 
     private boolean checkIsFavorite() {

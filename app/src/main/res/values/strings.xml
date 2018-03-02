@@ -12,4 +12,8 @@
     <string name="rating">Rating:</string>
     <string name="favorites">Get Favorites</string>
     <string name="no_favorites">No Favorite Movies</string>
+    <string name="trailers">Trailers</string>
+    <string name="reviews">Reviews</string>
+    <string name="trailer">Trailer</string>
+    <string name="review">Review</string>
 </resources>

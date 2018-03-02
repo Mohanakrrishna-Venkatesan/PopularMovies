@@ -39,8 +39,8 @@
 
             <ImageView
                 android:id="@+id/movie_Thumbnail"
-                android:layout_width="200dp"
-                android:layout_height="250dp"
+                android:layout_width="180dp"
+                android:layout_height="225dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
@@ -96,7 +96,7 @@
                 android:layout_marginLeft="24dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginStart="24dp"
-                android:maxLines="6"
+                android:maxLines="4"
                 android:scrollbars="vertical"
                 android:text="@string/sample"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
@@ -149,6 +149,56 @@
                 app:mfb_padding="12"
                 app:mfb_size="48" />
 
+            <LinearLayout
+                android:id="@+id/trailerLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/movie_overview"
+                android:layout_marginLeft="24dp"
+                android:layout_marginStart="24dp">
+
+                <TextView
+                    android:layout_marginVertical="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/black"
+                    android:text="@string/trailers"
+                    android:textStyle="bold"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_marginVertical="8dp"
+                    android:id="@+id/trailers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/reviewLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/trailerLayout"
+                android:layout_marginLeft="24dp"
+                android:layout_marginStart="24dp">
+                <TextView
+                    android:layout_marginVertical="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/black"
+                    android:text="@string/reviews"
+                    android:textStyle="bold"/>
+
+                <android.support.v7.widget.RecyclerView
+                    android:layout_marginVertical="8dp"
+                    android:id="@+id/reviews"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </LinearLayout>
         </android.support.constraint.ConstraintLayout>
     </ScrollView>
 

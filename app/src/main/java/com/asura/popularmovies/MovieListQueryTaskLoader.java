@@ -92,7 +92,7 @@ public class MovieListQueryTaskLoader extends AsyncTaskLoader<List<Movie>> {
                 null,
                 null,
                 null,
-                null);
+                COLUMN_MOVIE_ID);
 
         if(cursor.moveToFirst()){
             do{
